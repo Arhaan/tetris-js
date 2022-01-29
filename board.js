@@ -58,20 +58,10 @@ function create_new_moving_group() {
 function check_collision(){
     var outcome = false;
     for(var i = 0; i < movingSquares.length; i++){
-        if(movingSquares[i][1] >= gridHeight){
+        let x = movingSquares[i][0];
+        let y = movingSquares[i][1];
+        if(y >= gridHeight || (squares[x][y].movementStatus == 2)){
             outcome = true;
-            break;
-        }
-        for(var j = 0; j < gridWidth; j++){
-            for (let k = 0; k < gridHeight; k++) {
-                var square = squares[j][k];
-                if(square.coordinateX == movingSquares[i][0] && square.coordinateY == movingSquares[i][1] && square.movementStatus == 2){
-                    outcome = true;
-                    break;
-                }    
-            }
-        }
-        if(outcome){
             break;
         }
     }
@@ -80,6 +70,7 @@ function check_collision(){
 
 // Returns true if the block has reached bottom of screen
 //or touch a fixed square
+//To be implemented after down_move_moving_square
 
 
 function do_rotation(command){
@@ -98,20 +89,33 @@ function side_move_moving_square(command){
         }
     }
     for (let i = 0; i < movingSquares.length; i++){
-        if(movingSquares[i][0] < 0){
+        let x = movingSquares[i][0];
+        let y = movingSquares[i][1];
+        if(x < 0){
             side_move_moving_square("r");
             break;
-        } 
-    }
-    for (let i = 0; i < movingSquares.length; i++){
-        if(movingSquares[i][0] >= gridWidth){
+        }
+        if(x >= gridWidth){
             side_move_moving_square("l");
             break;
         } 
+        if (squares[x][y].movementStatus == 2){
+            if(command == "l"){
+                side_move_moving_square("r");
+                break;
+            }
+            else{
+                side_move_moving_square("l");
+                break;
+            }
+
+        }
     }
-    
 }
+
 //command must be either "l" or "r"
+//moves the block rightwards or leftwards
+//If single block crosses grid or collides with fixed square, reverses the movement
 
 function down_move_moving_squares(){
     // Check collision ensures that the squares below the moving squares are empty
