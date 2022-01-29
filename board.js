@@ -56,8 +56,30 @@ function create_new_moving_group() {
 
 
 function check_collision(){
-    // Prerak
+    var outcome = false;
+    for(var i = 0; i < movingSquares.length; i++){
+        if(movingSquares[i][1] >= gridHeight){
+            outcome = true;
+            break;
+        }
+        for(var j = 0; j < gridWidth; j++){
+            for (let k = 0; k < gridHeight; k++) {
+                var square = squares[j][k];
+                if(square.coordinateX == movingSquares[i][0] && square.coordinateY == movingSquares[i][1] && square.movementStatus == 2){
+                    outcome = true;
+                    break;
+                }    
+            }
+        }
+        if(outcome){
+            break;
+        }
+    }
+    return outcome;
 }
+
+// Returns true if the block has reached bottom of screen
+//or touch a fixed square
 
 
 function do_rotation(command){
@@ -65,8 +87,31 @@ function do_rotation(command){
 }
 
 function side_move_moving_square(command){
-    // Prerak
+    if(command == "l"){
+        for (let i = 0; i < movingSquares.length; i++){
+            movingSquares[i][0] -= 1; 
+        }
+    }
+    if (command == "r"){
+        for (let i = 0; i < movingSquares.length; i++){
+            movingSquares[i][0] += 1; 
+        }
+    }
+    for (let i = 0; i < movingSquares.length; i++){
+        if(movingSquares[i][0] < 0){
+            side_move_moving_square("r");
+            break;
+        } 
+    }
+    for (let i = 0; i < movingSquares.length; i++){
+        if(movingSquares[i][0] >= gridWidth){
+            side_move_moving_square("l");
+            break;
+        } 
+    }
+    
 }
+//command must be either "l" or "r"
 
 function down_move_moving_squares(){
     // Check collision ensures that the squares below the moving squares are empty
