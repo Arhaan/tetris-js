@@ -25,6 +25,8 @@ var squares = [];
 // Stores Conditon of each square on the board
 
 
+var movingSquares = [];
+// Stores coordiantes of all the moving squares
 //Main Screen of Tetris
 function draw_grid() {
 
@@ -53,6 +55,20 @@ function create_new_moving_group() {
 
 }
 
+
+function check_collision(){
+
+
+}
+
+function down_move_moving_squares(){
+    // Check collision ensures that the squares below the moving squares are empty
+    for (let i = 0; i < movingSquares.length; i++){
+        movingSquares[i][1] += 1; // Increase the y by 1, since canvas behaves like simplecpp
+    }
+}
+
+
 draw_grid();
 ctx.beginPath();
 ctx.rect(1000, 40, 400, 55);
@@ -67,22 +83,3 @@ ctx.textAlign = "center";
 ctx.fillText("Next Block", 1200, 75);
 ctx.closePath();
 
-
-
-// Object Square for each square of game.
-//Color Status 0 = Grey
-
-let Square = {
-    coordinateX:0,
-    coordinateY:0,
-    colorStatus:0
-}
-
-var squares = [];
-
-for (let index = 0; index < 200 ; index++) {
-    var square = new Square;
-    square.coordinateX = (index%10+10)*squareDimension
-    square.coordinateY = (Math.ceil(index/10))*squareDimension;
-    squares[i] = square;
-}
