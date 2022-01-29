@@ -7,12 +7,22 @@ var squareSide = 40;
 var gridHeight = 20;
 var gridWidth = 10;
 
+// Doesn't work perfectly, but can be made into a class maybe
+let Square = {
+    coordinateX:0,
+    coordinateY:0,
+    colorStatus:0,
+    movementStatus:0
+}
 
-var blocks = []
-// Will be a 2d array
-// blocks[i][j] === 0 => empty
-// 1 => stationary block
-// 2 => Moving block (moves down in next iter)
+// Object Square for each square of game.
+//Color Status 0 = Grey
+// MovementStatus 0 = Unfilled
+// 1 = moving
+// 2 = fixed (the squares that have already been set)
+
+var squares = [];
+// Stores Conditon of each square on the board
 
 
 //Main Screen of Tetris
@@ -20,14 +30,15 @@ function draw_grid() {
 
     ctx.beginPath();
     for (let i = 0; i < gridHeight; i++) {
-        blocks[i] = [];
+        squares[i] = [];
         for (let j = 0; j < gridWidth; j++) {
+            var square = new Square;
             var x_coordinate = j * squareSide;
             var y_coordinate = i * squareSide;
-            console.log(x_coordinate, y_coordinate)
+            square.coordinateX = x_coordinate;
+            square.coordinateY = y_coordinate;
             ctx.rect(x_coordinate, y_coordinate, squareSide, squareSide);
-            
-            blocks[i][j] = 0;
+            squares[i][j] =square;
         }
     }
     ctx.fillStyle = " #cfcfc7"
