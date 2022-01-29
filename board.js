@@ -52,13 +52,21 @@ function draw_grid() {
 
 // Creates new moving group
 function create_new_moving_group() {
-
+    // Arhaan
 }
 
 
 function check_collision(){
+    // Prerak
+}
 
 
+function do_rotation(command){
+    // Arhaan
+}
+
+function side_move_moving_square(command){
+    // Prerak
 }
 
 function down_move_moving_squares(){
