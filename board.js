@@ -7,13 +7,12 @@ var squareSide = 40;
 var gridHeight = 20;
 var gridWidth = 10;
 
-// Doesn't work perfectly, but can be made into a class maybe
-let Square = {
-    coordinateX:0,
-    coordinateY:0,
-    colorStatus:0,
-    movementStatus:0
-}
+function Square(){
+    this.coordinateX = 0;
+    this.coordinateY = 0;
+    this.colorStatus = 0;
+    this.movementStatus = 0;
+};
 
 // Object Square for each square of game.
 //Color Status 0 = Grey
@@ -34,7 +33,7 @@ function draw_grid() {
     for (let i = 0; i < gridHeight; i++) {
         squares[i] = [];
         for (let j = 0; j < gridWidth; j++) {
-            var square = new Square;
+            var square = new Square();
             var x_coordinate = j * squareSide;
             var y_coordinate = i * squareSide;
             square.coordinateX = x_coordinate;
