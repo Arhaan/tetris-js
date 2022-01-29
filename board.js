@@ -59,7 +59,7 @@ function check_collision(){
     var outcome = false;
     for(var i = 0; i < movingSquares.length; i++){
         let x = movingSquares[i][0];
-        let y = movingSquares[i][1];
+        let y = movingSquares[i][1] + 1;
         if(y >= gridHeight || (squares[x][y].movementStatus == 2)){
             outcome = true;
             break;
@@ -70,7 +70,7 @@ function check_collision(){
 
 // Returns true if the block has reached bottom of screen
 //or touch a fixed square
-//To be implemented after down_move_moving_square
+
 
 
 function do_rotation(command){
