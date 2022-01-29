@@ -43,8 +43,6 @@ function create_new_moving_group() {
 }
 
 draw_grid();
-console.log(blocks)
-console.log("Hello")
 ctx.beginPath();
 ctx.rect(1000, 40, 400, 55);
 ctx.rect(1000, 95, 400, 400);
