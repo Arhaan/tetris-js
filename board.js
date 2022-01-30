@@ -232,6 +232,10 @@ function set_moving_group_to_stationary_after_collision(){
 }
 
 
+function handle_filled_row(){
+    
+}
+
 ctx.beginPath();
 ctx.rect(1000, 40, 400, 55);
 ctx.rect(1000, 95, 400, 400);
@@ -255,6 +259,7 @@ function play_game(){
         if (check_collision()){
             // Game Over
             console.log("Game Over")
+            clearInterval(interval);
         }
     }
     else{
@@ -267,4 +272,4 @@ function play_game(){
 
 draw_grid()
 create_new_moving_group(4);
-setInterval(play_game, 100);
+var interval = setInterval(play_game, 100);
