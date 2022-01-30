@@ -55,7 +55,6 @@ function draw_grid() {
     ctx.stroke();
     ctx.closePath();
 
-    console.log(squares)
 }
 
 
@@ -67,7 +66,7 @@ function create_new_moving_group(command) {
     for (let i = 0; i < 4; i++) {
         randomcolors[i] = Math.floor(Math.random()*colors.length);
     }
-    
+        
     if (command == 1){
         // Straight Line
         movingSquares[0] = [centrex - 2, 0, randomcolors[0]],
@@ -122,12 +121,12 @@ function draw_moving_group(){
         square.coordinateY = y_coordinate;
         
 
-        square.movementStatus = 1;
+        square.movementStatus = 1; // Right now even moving forward doesnt change this back to 0, we can fix it or let 1 to mean both moving and empty
         squares[coordinates[0]][coordinates[1]] = square;  
 
         ctx.beginPath();
         ctx.rect(x_coordinate+filledSquarePadding/2.0, y_coordinate + filledSquarePadding/2.0, squareSide-filledSquarePadding, squareSide-filledSquarePadding);
-        ctx.fillStyle = "#FF0000";
+        ctx.fillStyle = colors[movingSquares[i][2]];
         ctx.fill();
         ctx.stroke();
         ctx.closePath();
@@ -249,15 +248,14 @@ ctx.closePath();
 
 function play_game(){
     var collided = check_collision();
-    console.log(collided)
     if (collided){
-        if (squares[gridWidth/2][0].movementStatus == 2){
-            // Game Over
-            console.log("Game Over") // TODO: Doesnt work
-            return;
-        }
+        
         set_moving_group_to_stationary_after_collision();
         create_new_moving_group(2);
+        if (check_collision()){
+            // Game Over
+            console.log("Game Over")
+        }
     }
     else{
 
