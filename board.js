@@ -63,42 +63,46 @@ function draw_grid() {
 function create_new_moving_group(command) {
     // Arhaan
     centrex = gridWidth/2;
+    var randomcolors = [];
+    for (let i = 0; i < 4; i++) {
+        randomcolors[i] = Math.floor(Math.random()*colors.length);
+    }
     
     if (command == 1){
         // Straight Line
-        movingSquares[0] = [centrex - 2, 0],
-        movingSquares[1] = [centrex - 1, 0], 
-        movingSquares[2] = [centrex - 0, 0], 
-        movingSquares[3] = [centrex + 1, 0] 
+        movingSquares[0] = [centrex - 2, 0, randomcolors[0]],
+        movingSquares[1] = [centrex - 1, 0, randomcolors[1]], 
+        movingSquares[2] = [centrex - 0, 0, randomcolors[2]], 
+        movingSquares[3] = [centrex + 1, 0, randomcolors[3]] 
     }
 
     if (command == 2){
 
         // T shape
-        movingSquares[0] = [centrex - 1, 0],
-        movingSquares[1] = [centrex - 0, 1], 
-        movingSquares[2] = [centrex - 0, 0], 
-        movingSquares[3] = [centrex + 1, 0] 
+        movingSquares[0] = [centrex - 1, 0, randomcolors[0]],
+        movingSquares[1] = [centrex - 0, 1, randomcolors[1]], 
+        movingSquares[2] = [centrex - 0, 0, randomcolors[2]], 
+        movingSquares[3] = [centrex + 1, 0, randomcolors[3]] 
     }
 
 
     if (command == 3){
 
         // L shape
-        movingSquares[0] = [centrex - 2, 0],
-        movingSquares[1] = [centrex - 1, 0], 
-        movingSquares[2] = [centrex - 0, 0], 
-        movingSquares[3] = [centrex + 0, 1] 
+        movingSquares[0] = [centrex - 2, 0, randomcolors[0]],
+        movingSquares[1] = [centrex - 1, 0, randomcolors[1]], 
+        movingSquares[2] = [centrex - 0, 0, randomcolors[2]], 
+        movingSquares[3] = [centrex + 0, 1, randomcolors[3]] 
     }
 
 
     if (command == 4){
 
         // Square shape
-        movingSquares[0] = [centrex - 1, 0],
-        movingSquares[1] = [centrex - 1, 1], 
-        movingSquares[2] = [centrex - 0, 0], 
-        movingSquares[3] = [centrex + 0, 1] 
+        movingSquares[0] = [centrex - 1, 0, randomcolors[0]],
+        movingSquares[1] = [centrex - 1, 1, randomcolors[1]], 
+        movingSquares[2] = [centrex - 0, 0, randomcolors[2]], 
+        movingSquares[3] = [centrex + 0, 1, randomcolors[3]] 
     }
 
     
