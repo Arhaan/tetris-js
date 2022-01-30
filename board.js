@@ -69,10 +69,10 @@ function create_new_moving_group(command) {
     // Arhaan
     centrex = gridWidth/2;
     
-    var randomcolor = Math.floor(Math.random()*colors.length);
+    var randomcolor = Math.floor(Math.random()*(colors.length-1)) + 1;
     
     while (randomcolor === prev_color){
-        randomcolor = Math.floor(Math.random()*colors.length);
+        randomcolor = Math.floor(Math.random()*(colors.length-1)) + 1;
     }
 
         
@@ -326,7 +326,6 @@ function play_game(){
     var collided = check_collision();
     if (collided){  
         set_moving_group_to_stationary_after_collision();
-        create_new_moving_group(Math.floor(Math.random()*4)+1); // Generates a number between 1 and 4 and creates group with that
         var new_shape = Math.floor(Math.random()*4)+1;
         while (new_shape === prev_shape){
             new_shape = Math.floor(Math.random()*4)+1;
