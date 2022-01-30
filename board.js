@@ -30,22 +30,24 @@ var movingSquares = [];
 function draw_grid() {
 
     ctx.beginPath();
-    for (let i = 0; i < gridHeight; i++) {
+    for (let i = 0; i < gridWidth; i++) {
         squares[i] = [];
-        for (let j = 0; j < gridWidth; j++) {
+        for (let j = 0; j <  gridHeight; j++) {
             var square = new Square();
             var x_coordinate = j * squareSide;
             var y_coordinate = i * squareSide;
             square.coordinateX = x_coordinate;
             square.coordinateY = y_coordinate;
             ctx.rect(x_coordinate, y_coordinate, squareSide, squareSide);
-            squares[i][j] =square;
+            squares[i][j] =square; // i, j are the x and y coordinates, in units of square side, y is taken normally like simplecpp
         }
     }
     ctx.fillStyle = " #cfcfc7"
     ctx.fill();
     ctx.stroke();
     ctx.closePath();
+
+    console.log(squares)
 }
 
 
@@ -118,7 +120,7 @@ function side_move_moving_square(command){
 //If single block crosses grid or collides with fixed square, reverses the movement
 
 function down_move_moving_squares(){
-    // Check collision ensures that the squares below the moving squares are empty
+    // Check_collision will ensure that the squares below the moving squares are empty
     for (let i = 0; i < movingSquares.length; i++){
         movingSquares[i][1] += 1; // Increase the y by 1, since canvas behaves like simplecpp
     }
