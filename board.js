@@ -10,7 +10,10 @@ var gridWidth = 10;
 
 
 var colors = [
-
+    "#42f548", // Green
+    "#f54251", // Red
+    "#429ef5", // Blue
+    "#edea0e" // Yellow
 ]
 function Square(){
     this.coordinateX = 0;
