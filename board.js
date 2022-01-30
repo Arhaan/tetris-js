@@ -1,7 +1,9 @@
-// Rotation
-// Score
-// Right left
-// 0 1
+// Rotation Arhaan
+// Score Prerak
+// Right left Prerak
+// 0 1 Arhaan
+// Colour Arhaan
+// Previous shape no Arhaan
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
