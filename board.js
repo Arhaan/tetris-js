@@ -4,9 +4,14 @@ var ctx = canvas.getContext("2d");
 
 
 var squareSide = 40;
+var filledSquarePadding = 5; // The amount of padding in the unfilled squares
 var gridHeight = 20;
 var gridWidth = 10;
 
+
+var colors = [
+
+]
 function Square(){
     this.coordinateX = 0;
     this.coordinateY = 0;
@@ -114,9 +119,10 @@ function draw_moving_group(){
         squares[coordinates[0]][coordinates[1]] = square;  
 
         ctx.beginPath();
-        ctx.rect(x_coordinate, y_coordinate, squareSide, squareSide);
+        ctx.rect(x_coordinate+filledSquarePadding/2.0, y_coordinate + filledSquarePadding/2.0, squareSide-filledSquarePadding, squareSide-filledSquarePadding);
         ctx.fillStyle = "#FF0000";
         ctx.fill();
+        ctx.stroke();
         ctx.closePath();
     }
 }
@@ -178,16 +184,45 @@ function side_move_moving_square(command){
         }
     }
 }
-
 //command must be either "l" or "r"
 //moves the block rightwards or leftwards
 //If single block crosses grid or collides with fixed square, reverses the movement
 
+
+function disappear_moving_group_from_prev_position(){
+    // Make the squares at original position disappear
+    ctx.beginPath();
+    for (let i = 0; i < movingSquares.length; i++) {
+        const coordinates = movingSquares[i];
+        var x_coordinate = coordinates[0] * squareSide;
+        var y_coordinate = coordinates[1] * squareSide;
+        
+        ctx.clearRect(x_coordinate, y_coordinate , squareSide, squareSide);
+        ctx.rect(x_coordinate, y_coordinate, squareSide, squareSide);
+    } 
+    ctx.fillStyle = " #cfcfc7"
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath();
+
+}
+
+
 function down_move_moving_squares(){
     // Check_collision will ensure that the squares below the moving squares are empty
+    disappear_moving_group_from_prev_position();
     for (let i = 0; i < movingSquares.length; i++){
         movingSquares[i][1] += 1; // Increase the y by 1, since canvas behaves like simplecpp
     }
+    draw_moving_group();
+}
+
+
+function set_moving_group_to_stationary_after_collision(){
+    for (let i = 0; i < movingSquares.length; i++) {
+        const coordinates = movingSquares[i];
+        squares[coordinates[0]][coordinates[1]].movementStatus = 2; // Fixed
+    }  
 }
 
 
@@ -206,8 +241,25 @@ ctx.closePath();
 
 
 function play_game(){
+    var collided = check_collision();
+    console.log(collided)
+    if (collided){
+        if (squares[gridWidth/2][0].movementStatus == 2){
+            // Game Over
+            console.log("Game Over") // TODO: Doesnt work
+            return;
+        }
+        set_moving_group_to_stationary_after_collision();
+        create_new_moving_group(2);
+    }
+    else{
+
+        down_move_moving_squares();
+    }
+
 
 }
 
 draw_grid()
 create_new_moving_group(4);
+setInterval(play_game, 10);
