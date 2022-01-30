@@ -298,7 +298,7 @@ function move_row_downwards(row){
         squares[i][row+1].movementStatus = squares[i][row].movementStatus;
         if(squares[i][row+1].colorStatus != 0){
             ctx.beginPath();
-            ctx.rect(i*squareSide+filledSquarePadding/2.0, row*squareSide + filledSquarePadding/2.0, squareSide-filledSquarePadding, squareSide-filledSquarePadding);
+            ctx.rect(i*squareSide+filledSquarePadding/2.0, (row+1)*squareSide + filledSquarePadding/2.0, squareSide-filledSquarePadding, squareSide-filledSquarePadding);
             ctx.fillStyle = colors[squares[i][row+1].colorStatus]
             ctx.fill();
             ctx.stroke();
