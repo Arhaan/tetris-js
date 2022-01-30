@@ -2,8 +2,6 @@
 // Score Prerak
 // Right left Prerak
 // 0 1 Arhaan
-// Colour Arhaan
-// Previous shape no Arhaan
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
@@ -68,47 +66,49 @@ function draw_grid() {
 function create_new_moving_group(command) {
     // Arhaan
     centrex = gridWidth/2;
-    var randomcolors = Math.floor(Math.random()*colors.length);
-    // for (let i = 0; i < 4; i++) {
-    //     randomcolors[i] = Math.floor(Math.random()*colors.length);
-    // }
+    
+    var randomcolor = Math.floor(Math.random()*colors.length);
+    
+    while (randomcolor === prev_color){
+        randomcolor = Math.floor(Math.random()*colors.length);
+    }
+
         
     if (command == 1){
         // Straight Line
-        movingSquares[0] = [centrex - 2, 0, randomcolors[0]],
-        movingSquares[1] = [centrex - 1, 0, randomcolors[1]], 
-        movingSquares[2] = [centrex - 0, 0, randomcolors[2]], 
-        movingSquares[3] = [centrex + 1, 0, randomcolors[3]] 
+        movingSquares[0] = [centrex - 2, 0, randomcolor],
+        movingSquares[1] = [centrex - 1, 0, randomcolor], 
+        movingSquares[2] = [centrex - 0, 0, randomcolor], 
+        movingSquares[3] = [centrex + 1, 0, randomcolor] 
     }
 
     if (command == 2){
-
         // T shape
-        movingSquares[0] = [centrex - 1, 0, randomcolors[0]],
-        movingSquares[1] = [centrex - 0, 1, randomcolors[1]], 
-        movingSquares[2] = [centrex - 0, 0, randomcolors[2]], 
-        movingSquares[3] = [centrex + 1, 0, randomcolors[3]] 
+        movingSquares[0] = [centrex - 1, 0, randomcolor],
+        movingSquares[1] = [centrex - 0, 1, randomcolor], 
+        movingSquares[2] = [centrex - 0, 0, randomcolor], 
+        movingSquares[3] = [centrex + 1, 0, randomcolor] 
     }
 
 
     if (command == 3){
-
         // L shape
-        movingSquares[0] = [centrex - 2, 0, randomcolors[0]],
-        movingSquares[1] = [centrex - 1, 0, randomcolors[1]], 
-        movingSquares[2] = [centrex - 0, 0, randomcolors[2]], 
-        movingSquares[3] = [centrex + 0, 1, randomcolors[3]] 
+        movingSquares[0] = [centrex - 2, 0, randomcolor],
+        movingSquares[1] = [centrex - 1, 0, randomcolor], 
+        movingSquares[2] = [centrex - 0, 0, randomcolor], 
+        movingSquares[3] = [centrex + 0, 1, randomcolor] 
     }
 
 
     if (command == 4){
-
         // Square shape
-        movingSquares[0] = [centrex - 1, 0, randomcolors[0]],
-        movingSquares[1] = [centrex - 1, 1, randomcolors[1]], 
-        movingSquares[2] = [centrex - 0, 0, randomcolors[2]], 
-        movingSquares[3] = [centrex + 0, 1, randomcolors[3]] 
+        movingSquares[0] = [centrex - 1, 0, randomcolor],
+        movingSquares[1] = [centrex - 1, 1, randomcolor], 
+        movingSquares[2] = [centrex - 0, 0, randomcolor], 
+        movingSquares[3] = [centrex + 0, 1, randomcolor] 
     }
+
+    prev_color = randomcolor;
 
     
     draw_moving_group();
@@ -260,7 +260,12 @@ function play_game(){
     var collided = check_collision();
     if (collided){  
         set_moving_group_to_stationary_after_collision();
-        create_new_moving_group(Math.floor(Math.random()*4)+1); // Generates a number between 1 and 4 and creates group with that
+        var new_shape = Math.floor(Math.random()*4)+1;
+        while (new_shape === prev_shape){
+            new_shape = Math.floor(Math.random()*4)+1;
+        }
+        create_new_moving_group(new_shape); // Generates a number between 1 and 4 and creates group with that
+        prev_shape = new_shape;
         if (check_collision()){
             // Game Over
             console.log("Game Over")
@@ -275,5 +280,7 @@ function play_game(){
 }
 
 draw_grid()
+var prev_shape = Math.floor(Math.random()*4)+1;
+var prev_color = -1;
 create_new_moving_group(4);
 var interval = setInterval(play_game, 100);
