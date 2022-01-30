@@ -251,7 +251,7 @@ function play_game(){
     if (collided){
         
         set_moving_group_to_stationary_after_collision();
-        create_new_moving_group(2);
+        create_new_moving_group(Math.floor(Math.random()*4)+1); // Generates a number between 1 and 4 and creates group with that
         if (check_collision()){
             // Game Over
             console.log("Game Over")
@@ -267,4 +267,4 @@ function play_game(){
 
 draw_grid()
 create_new_moving_group(4);
-setInterval(play_game, 10);
+setInterval(play_game, 100);
