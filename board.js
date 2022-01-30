@@ -1,3 +1,7 @@
+// Rotation
+// Score
+// Right left
+// 0 1
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
@@ -62,10 +66,10 @@ function draw_grid() {
 function create_new_moving_group(command) {
     // Arhaan
     centrex = gridWidth/2;
-    var randomcolors = [];
-    for (let i = 0; i < 4; i++) {
-        randomcolors[i] = Math.floor(Math.random()*colors.length);
-    }
+    var randomcolors = Math.floor(Math.random()*colors.length);
+    // for (let i = 0; i < 4; i++) {
+    //     randomcolors[i] = Math.floor(Math.random()*colors.length);
+    // }
         
     if (command == 1){
         // Straight Line
@@ -252,8 +256,7 @@ ctx.closePath();
 
 function play_game(){
     var collided = check_collision();
-    if (collided){
-        
+    if (collided){  
         set_moving_group_to_stationary_after_collision();
         create_new_moving_group(Math.floor(Math.random()*4)+1); // Generates a number between 1 and 4 and creates group with that
         if (check_collision()){
@@ -263,7 +266,6 @@ function play_game(){
         }
     }
     else{
-
         down_move_moving_squares();
     }
 
