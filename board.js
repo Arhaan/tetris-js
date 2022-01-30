@@ -28,7 +28,7 @@ var movingSquares = [];
 // Stores coordiantes of all the moving squares
 //Main Screen of Tetris
 function draw_grid() {
-
+ 
     ctx.beginPath();
     for (let i = 0; i < gridWidth; i++) {
         squares[i] = [];
@@ -52,8 +52,46 @@ function draw_grid() {
 
 
 // Creates new moving group
-function create_new_moving_group() {
+function create_new_moving_group(command) {
     // Arhaan
+    centrex = gridWidth/2;
+    
+    if (command == 1){
+        // Straight Line
+        movingSquares[0] = [centrex - 2, 0],
+        movingSquares[1] = [centrex - 1, 0], 
+        movingSquares[2] = [centrex - 0, 0], 
+        movingSquares[3] = [centrex + 1, 0] 
+    }
+
+    if (command == 2){
+
+        // T shape
+        movingSquares[0] = [centrex - 1, 0],
+        movingSquares[1] = [centrex - 0, 1], 
+        movingSquares[2] = [centrex - 0, 0], 
+        movingSquares[3] = [centrex + 1, 0] 
+    }
+
+
+    if (command == 3){
+
+        // L shape
+        movingSquares[0] = [centrex - 2, 0],
+        movingSquares[1] = [centrex - 1, 0], 
+        movingSquares[2] = [centrex - 0, 0], 
+        movingSquares[3] = [centrex + 0, 1] 
+    }
+
+
+    if (command == 4){
+
+        // Square shape
+        movingSquares[0] = [centrex - 1, 0],
+        movingSquares[1] = [centrex - 1, 1], 
+        movingSquares[2] = [centrex - 0, 0], 
+        movingSquares[3] = [centrex + 0, 1] 
+    }
 }
 
 
