@@ -34,8 +34,8 @@ function draw_grid() {
         squares[i] = [];
         for (let j = 0; j <  gridHeight; j++) {
             var square = new Square();
-            var x_coordinate = j * squareSide;
-            var y_coordinate = i * squareSide;
+            var x_coordinate = i * squareSide;
+            var y_coordinate = j * squareSide;
             square.coordinateX = x_coordinate;
             square.coordinateY = y_coordinate;
             ctx.rect(x_coordinate, y_coordinate, squareSide, squareSide);
@@ -92,8 +92,34 @@ function create_new_moving_group(command) {
         movingSquares[2] = [centrex - 0, 0], 
         movingSquares[3] = [centrex + 0, 1] 
     }
+
+    
+    draw_moving_group();
+
 }
 
+
+function draw_moving_group(){
+    // Actually draws the group on screen
+    for (let i = 0; i < movingSquares.length; i++) {
+        const coordinates = movingSquares[i];
+        var square = new Square();
+        var x_coordinate = coordinates[0] * squareSide;
+        var y_coordinate = coordinates[1] * squareSide;
+        square.coordinateX = x_coordinate;
+        square.coordinateY = y_coordinate;
+        
+
+        square.movementStatus = 1;
+        squares[coordinates[0]][coordinates[1]] = square;  
+
+        ctx.beginPath();
+        ctx.rect(x_coordinate, y_coordinate, squareSide, squareSide);
+        ctx.fillStyle = "#FF0000";
+        ctx.fill();
+        ctx.closePath();
+    }
+}
 
 function check_collision(){
     var outcome = false;
@@ -165,7 +191,6 @@ function down_move_moving_squares(){
 }
 
 
-draw_grid();
 ctx.beginPath();
 ctx.rect(1000, 40, 400, 55);
 ctx.rect(1000, 95, 400, 400);
@@ -179,3 +204,10 @@ ctx.textAlign = "center";
 ctx.fillText("Next Block", 1200, 75);
 ctx.closePath();
 
+
+function play_game(){
+
+}
+
+draw_grid()
+create_new_moving_group(4);
