@@ -17,6 +17,10 @@ var inputCommand = "";
 
 document.addEventListener("keydown", keyDownHandler, false);
 
+canvas.addEventListener("mousedown", function (e) {
+    inputCommand = "rot";
+}, false);
+
 function keyDownHandler(e) {
     if(e.key == "Right" || e.key == "ArrowRight") {
         inputCommand = "r";
@@ -393,6 +397,7 @@ function play_game(){
     var collided = check_collision();
     if (collided){  
         set_moving_group_to_stationary_after_collision();
+        handle_filled_row();
         var new_shape = Math.floor(Math.random()*4)+1;
         while (new_shape === prev_shape){
             new_shape = Math.floor(Math.random()*4)+1;
