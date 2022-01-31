@@ -1,6 +1,6 @@
-// Motion should be more frequent - Prerak
+// Motion should be more frequent - Prerak => Done
 // Animate motion - optional
-// Down key - Prerak
+// Down key - Prerak => Done
 // Impression at the bottom - Prerak
 // Bomb - Arhaan
 // Touch Screen Optional - Arhaan
@@ -38,6 +38,9 @@ function keyDownHandler(e) {
     }
     else if(e.key == "Up" || e.key == "ArrowUp"|| e.key=="w" || e.key == "W") {
         inputCommand = "rot";
+    }
+    else if(e.key == "Down" || e.key == "ArrowDown" || e.key == "s" || e.key == "S"){
+        inputCommand = "d";
     }
 }
 
@@ -421,11 +424,10 @@ function play_game(){
             // Game Over
             console.log("Game Over")
             clearInterval(interval);
+            clearInterval(interval_input);
         }
     }
     else{
-        if(inputCommand == "rot") do_rotation();
-        else side_move_moving_square(inputCommand);
         down_move_moving_squares();
     }
     inputCommand = "";
@@ -433,12 +435,21 @@ function play_game(){
 
 }
 
+function move_according_to_input(){
+    if(inputCommand == "rot") {do_rotation();}
+    if(inputCommand == "l" || inputCommand == "r") {side_move_moving_square(inputCommand);}
+    if(inputCommand == "d" && !(check_collision())){down_move_moving_squares(); points += 1;} 
+    score_box.textContent = points;
+    inputCommand = "";
+}
+
 draw_grid()
 var prev_shape = Math.floor(Math.random()*4)+1;
 var prev_color = -1;
 create_new_moving_group(prev_shape);
-var time_interval = 200;
+var time_interval = 1000;
 var interval = setInterval(play_game, time_interval);
+var interval_input = setInterval(move_according_to_input,time_interval/20);
 
 
 // play_game()
