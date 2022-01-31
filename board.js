@@ -1,7 +1,15 @@
-// Rotation Arhaan
-// Score Prerak
-// Right left Prerak
-// 0 1 Arhaan
+// Motion should be more frequent - Prerak
+// Animate motion - optional
+// Down key - Prerak
+// Impression at the bottom - Prerak
+// Bomb - Arhaan
+// Touch Screen Optional - Arhaan
+// Next Block preview - Arhaan
+// Handle Game Over - Arhaan
+// More Game shapes - Arhaan
+// UI of Score display - Arhaan
+// Help - Arhaan
+
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
@@ -131,7 +139,9 @@ function create_new_moving_group(command) {
     }
 
     prev_color = randomcolor;
-
+    if (check_collision()){
+        return;
+    }
     
     draw_moving_group();
 
@@ -140,6 +150,7 @@ function create_new_moving_group(command) {
 
 function draw_moving_group(){
     // Actually draws the group on screen
+    
     for (let i = 0; i < movingSquares.length; i++) {
         const coordinates = movingSquares[i];
         var square = new Square();
@@ -426,7 +437,8 @@ draw_grid()
 var prev_shape = Math.floor(Math.random()*4)+1;
 var prev_color = -1;
 create_new_moving_group(prev_shape);
-var interval = setInterval(play_game, 200);
+var time_interval = 200;
+var interval = setInterval(play_game, time_interval);
 
 
 // play_game()
