@@ -5,7 +5,7 @@
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
-
+var score_box = document.getElementById("score")
 var points = 0;
 
 var squareSide = 40;
@@ -345,6 +345,8 @@ function handle_filled_row(){
     if(filled_rows == 4){
         points += 1200;
     }
+
+    score_box.textContent = points;
 }
 
 function clear_row(row){
