@@ -22,13 +22,13 @@ canvas.addEventListener("mousedown", function (e) {
 }, false);
 
 function keyDownHandler(e) {
-    if(e.key == "Right" || e.key == "ArrowRight") {
+    if(e.key == "Right" || e.key == "ArrowRight" || e.key=="d" || e.key == "D") {
         inputCommand = "r";
     }
-    else if(e.key == "Left" || e.key == "ArrowLeft") {
+    else if(e.key == "Left" || e.key == "ArrowLeft"|| e.key=="a" || e.key == "A") {
         inputCommand = "l";
     }
-    else if(e.key == "Up" || e.key == "ArrowUp") {
+    else if(e.key == "Up" || e.key == "ArrowUp"|| e.key=="w" || e.key == "W") {
         inputCommand = "rot";
     }
 }
