@@ -24,6 +24,9 @@ function keyDownHandler(e) {
     else if(e.key == "Left" || e.key == "ArrowLeft") {
         inputCommand = "l";
     }
+    else if(e.key == "Up" || e.key == "ArrowUp") {
+        inputCommand = "rot";
+    }
 }
 
 
@@ -193,13 +196,52 @@ function check_collision_side_movement(command){
 //Checks for sideway collision.
 //Returns true if collision occurs
 
-function do_rotation(command){
-    // Arhaan
+function do_rotation(){
+    // Always do clockwise rotation
+    // coordinates [2] has to be left unchanged
+
+    let relcoordinates = [];
+    for (let i = 0; i < movingSquares.length; i++) {
+        relcoordinates[i] = [movingSquares[i][0] - movingSquares[2][0], movingSquares[i][1] - movingSquares[2][1]];
+    }
+
+    console.log(relcoordinates)
+    var present_oreo = prev_shape;
+    if (present_oreo === 4){
+        return; // Square
+    }
+
+    else{
+        var final_positions_free = true;
+        for (let i = 0; i < movingSquares.length; i++) {
+            var newx = movingSquares[2][0] - relcoordinates[i][1];
+            var newy = movingSquares[2][1] + relcoordinates[i][0];
+
+            if (newx < 0 || newx >= gridWidth || newy < 0 || newy >= gridHeight || squares[newx][newy].movementStatus == 2){
+                final_positions_free = false;
+
+                
+                break;
+            }
+        }
+        if (final_positions_free){
+            console.log("Rotating")
+            disappear_moving_group_from_prev_position();
+            for (let i = 0; i < movingSquares.length; i++) {
+                movingSquares[i][0] = - relcoordinates[i][1] + movingSquares[2][0];
+                movingSquares[i][1] = + relcoordinates[i][0] + movingSquares[2][1]; 
+                
+            }
+            draw_moving_group();
+        }
+    }
+
 }
 
 
-function side_move_moving_square(command){
-    if (command == ""){
+function side_move_moving_square(){
+    command = inputCommand;
+    if (command != "r" && command != "l"){
         return;
     }
     let collided = check_collision_side_movement(command);
@@ -246,6 +288,10 @@ function disappear_moving_group_from_prev_position(){
 
 function down_move_moving_squares(){
     // Check_collision will ensure that the squares below the moving squares are empty
+    var collided = check_collision()
+    if (collided){
+        return;
+    }
     disappear_moving_group_from_prev_position();
     for (let i = 0; i < movingSquares.length; i++){
         movingSquares[i][1] += 1; // Increase the y by 1, since canvas behaves like simplecpp
@@ -360,9 +406,11 @@ function play_game(){
         }
     }
     else{
-        side_move_moving_square(inputCommand);
+        if(inputCommand == "rot") do_rotation();
+        else side_move_moving_square(inputCommand);
         down_move_moving_squares();
     }
+    inputCommand = "";
 
 
 }
@@ -371,4 +419,17 @@ draw_grid()
 var prev_shape = Math.floor(Math.random()*4)+1;
 var prev_color = -1;
 create_new_moving_group(prev_shape);
-var interval = setInterval(play_game, 100);
+var interval = setInterval(play_game, 200);
+
+
+// play_game()
+// play_game()
+// play_game()
+
+// function test_rotation(){
+
+//     if(inputCommand == "rot") do_rotation(); 
+//     inputCommand = "";
+// }
+
+// var interval = setInterval(test_rotation, 100);
