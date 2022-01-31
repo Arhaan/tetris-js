@@ -46,11 +46,21 @@ function keyDownHandler(e) {
 
 
 var colors = [
-    "#cfcfc7", //Grey
-    "#42f548", // Green
-    "#f54251", // Red
-    "#429ef5", // Blue
-    "#edea0e" // Yellow
+    "rgba(0,0,0,0.1)", //Grey
+    "rgb(0,255,0)", // Green
+    "rgb(255,0,0)", // Red
+    "rgb(0,255,255)", // Aqua
+    "rgb(255,255,0)", // Yellow
+    "rgb(255,0,255)" // Fuchsia
+]
+
+var lighter_colors = [
+    "rgba(0,0,0,0.1)", //Grey
+    "rgba(0,255,0,0.4)", // Green
+    "rgba(255,0,0,0.4)", // Red
+    "rgba(0,255,255,0.4)", // Aqua
+    "rgba(255,255,0,0.4)", // Yellow
+    "rgba(255,0,255,0.4)" // Fuchsia
 ]
 function Square(){
     this.coordinateX = 0;
@@ -87,7 +97,7 @@ function draw_grid() {
             squares[i][j] =square; // i, j are the x and y coordinates, in units of square side, y is taken normally like simplecpp
         }
     }
-    ctx.fillStyle = " #cfcfc7"
+    ctx.fillStyle = " rgba(0,0,0,0.1)"
     ctx.fill();
     ctx.stroke();
     ctx.closePath();
@@ -187,6 +197,7 @@ function check_collision(){
     }
     return outcome;
 }
+
 
 // Returns true if the block has reached bottom of screen
 //or touch a fixed square
@@ -296,7 +307,7 @@ function disappear_moving_group_from_prev_position(){
         ctx.rect(x_coordinate, y_coordinate, squareSide, squareSide);
         squares[coordinates[0]][coordinates[1]].movementStatus = 0;
     } 
-    ctx.fillStyle = " #cfcfc7"
+    ctx.fillStyle = " rgba(0,0,0,0.1)"
     ctx.fill();
     ctx.stroke();
     ctx.closePath();
@@ -372,7 +383,7 @@ function clear_row(row){
         squares[i][row].colorStatus = 0;
         ctx.rect(i*squareSide, y_coordinate, squareSide, squareSide);
     }
-    ctx.fillStyle = " #cfcfc7"
+    ctx.fillStyle = " rgba(0,0,0,0.1)"
     ctx.fill();
     ctx.stroke();
     ctx.closePath();
