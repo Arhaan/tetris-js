@@ -370,4 +370,4 @@ draw_grid()
 var prev_shape = Math.floor(Math.random()*4)+1;
 var prev_color = -1;
 create_new_moving_group(prev_shape);
-var interval = setInterval(play_game, 500);
+var interval = setInterval(play_game, 100);
