@@ -12,6 +12,19 @@ var squareSide = 40;
 var filledSquarePadding = 5; // The amount of padding in the unfilled squares
 var gridHeight = 20;
 var gridWidth = 10;
+var inputCommand = "";
+
+
+document.addEventListener("keydown", keyDownHandler, false);
+
+function keyDownHandler(e) {
+    if(e.key == "Right" || e.key == "ArrowRight") {
+        inputCommand = "r";
+    }
+    else if(e.key == "Left" || e.key == "ArrowLeft") {
+        inputCommand = "l";
+    }
+}
 
 
 var colors = [
@@ -160,15 +173,16 @@ function check_collision(){
 function check_collision_side_movement(command){
     var outcome = false;
     for (let i = 0; i < movingSquares.length; i++) {
+        let x, y;
         if(command == "l"){
-            let x = movingSquares[i][0] - 1;
-            let y = movingSquares[i][1];
+            x = movingSquares[i][0] - 1;
+            y = movingSquares[i][1];
         } 
         if(command == "r"){
-            let x = movingSquares[i][0] + 1;
-            let y = movingSquares[i][1];
+            x = movingSquares[i][0] + 1;
+            y = movingSquares[i][1];
         }   
-        if(squares[x][y].movementStatus == 2 || x < 0 || x >= gridWidth){
+        if(x < 0 || x >= gridWidth || squares[x][y].movementStatus == 2 ){
             outcome = true;
             break;
         }
@@ -185,8 +199,12 @@ function do_rotation(command){
 
 
 function side_move_moving_square(command){
+    if (command == ""){
+        return;
+    }
     let collided = check_collision_side_movement(command);
     if(!collided){
+        disappear_moving_group_from_prev_position();
         if(command == "l"){
             for (let i = 0; i < movingSquares.length; i++){
                 movingSquares[i][0] -= 1; 
@@ -197,7 +215,9 @@ function side_move_moving_square(command){
                 movingSquares[i][0] += 1; 
             }
         }
+        draw_moving_group();
     }
+    inputCommand = "";
 }
 //command must be either "l" or "r"
 //moves the block rightwards or leftwards
@@ -339,6 +359,7 @@ function play_game(){
         }
     }
     else{
+        side_move_moving_square(inputCommand);
         down_move_moving_squares();
     }
 
