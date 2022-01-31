@@ -234,6 +234,7 @@ function disappear_moving_group_from_prev_position(){
         
         ctx.clearRect(x_coordinate, y_coordinate , squareSide, squareSide);
         ctx.rect(x_coordinate, y_coordinate, squareSide, squareSide);
+        squares[coordinates[0]][coordinates[1]].movementStatus = 0;
     } 
     ctx.fillStyle = " #cfcfc7"
     ctx.fill();
