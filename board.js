@@ -15,6 +15,7 @@ var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var score_box = document.getElementById("score")
 var points = 0;
+var level = 0;
 
 var squareSide = 40;
 var filledSquarePadding = 5; // The amount of padding in the unfilled squares
@@ -62,6 +63,16 @@ var lighter_colors = [
     "rgba(255,255,0,0.4)", // Yellow
     "rgba(255,0,255,0.4)" // Fuchsia
 ]
+
+var level_bonuses = [
+    [1, 1], //Level 0
+    [2, 0.90], //Level 1
+    [3, 0.75], //Level 2
+    [4, 0.60], //Level 3
+    [5, 0.50], //Level 4
+]
+//[{point multiplier},{setinterval multiplier}]
+
 function Square(){
     this.coordinateX = 0;
     this.coordinateY = 0;
@@ -359,16 +370,16 @@ function handle_filled_row(){
 
     //Update Points
     if(filled_rows == 1){
-        points += 40;
+        points += 40*level_bonuses[level][0];
     }
     if(filled_rows == 2){
-        points += 100;
+        points += 100*level_bonuses[level][0];
     }
     if(filled_rows == 3){
-        points += 300;
+        points += 300*level_bonuses[level][0];
     }
     if(filled_rows == 4){
-        points += 1200;
+        points += 1200*level_bonuses[level][0];
     }
 
     score_box.textContent = points;
@@ -441,6 +452,11 @@ function play_game(){
     else{
         down_move_moving_squares();
     }
+    //Updating Level
+    if(points >= 700 && level == 0){level = 1};
+    if(points >= 2500 && level == 0){level = 2};
+    if(points >= 8000 && level == 0){level = 3};
+    if(points >= 15000 && level == 0){level = 4};
     inputCommand = "";
 
 
@@ -450,6 +466,13 @@ function move_according_to_input(){
     if(inputCommand == "rot") {do_rotation();}
     if(inputCommand == "l" || inputCommand == "r") {side_move_moving_square(inputCommand);}
     if(inputCommand == "d" && !(check_collision())){down_move_moving_squares(); points += 1;} 
+
+    //Updating Level
+    if(points >= 1000 && level == 0){level = 1};
+    if(points >= 5000 && level == 0){level = 2};
+    if(points >= 10000 && level == 0){level = 3};
+    if(points >= 50000 && level == 0){level = 4};
+
     score_box.textContent = points;
     inputCommand = "";
 }
@@ -459,8 +482,8 @@ var prev_shape = Math.floor(Math.random()*4)+1;
 var prev_color = -1;
 create_new_moving_group(prev_shape);
 var time_interval = 1000;
-var interval = setInterval(play_game, time_interval);
-var interval_input = setInterval(move_according_to_input,time_interval/20);
+var interval = setInterval(play_game, time_interval*level_bonuses[level][1]);
+var interval_input = setInterval(move_according_to_input,time_interval/20*level_bonuses[level][1]);
 
 
 // play_game()
