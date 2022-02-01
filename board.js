@@ -603,7 +603,7 @@ var prev_color = -1;
 var next_shape = -1;
 var next_color = -1;
 create_new_moving_group(prev_shape);
-var time_interval = 100;
+var time_interval = 1000;
 var interval = setInterval(play_game, time_interval*level_bonuses[level][1]);
 var interval_input = setInterval(move_according_to_input,time_interval/20*level_bonuses[level][1]);
 
