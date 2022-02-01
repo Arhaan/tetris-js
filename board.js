@@ -659,6 +659,11 @@ function handle_game_over(){
     close.onclick = function() {
         modal.style.display = "none";
       }
+
+      var reload_button = document.getElementById("reload-button")
+      reload_button.onclick = function(){
+          location.reload();
+      }
 }
 
 
