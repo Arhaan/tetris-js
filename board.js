@@ -541,7 +541,6 @@ function play_game(){
         down_move_moving_squares();
     }
 
-    handle_collision(); // Prevents any motion just after collision happens
     //Updating Level
     if(points >= 700 && level == 0){level = 1};
     if(points >= 2500 && level == 1){level = 2};
