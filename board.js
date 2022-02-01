@@ -22,10 +22,11 @@ var inputCommand = "";
 
 document.addEventListener("keydown", keyDownHandler, false);
 
-canvas.addEventListener("mousedown", function (e) {
-    inputCommand = "rot";
-}, false);
+canvas.addEventListener("mousedown", handle_mouse_click, false);
 
+function handle_mouse_click(){
+    if (!bomb_mode) inputCommand = "rot";
+}
 function keyDownHandler(e) {
     if(e.key == "Right" || e.key == "ArrowRight" || e.key=="d" || e.key == "D") {
         inputCommand = "r";
@@ -716,14 +717,57 @@ playpausebutton.onclick = function(){
 }
 
 
+var bombbtn = document.getElementById("bomb-button")
+bombbtn.onclick = bomb;
+var bomb_mode = false;
 function bomb(){
+    bomb_mode = true;
+    // canvas.removeEventListener("mousedown", handle_mouse_click, false);
     pause();
-    var x, y;
-    canvas.addEventListener("mousedown", function (e) {
-        let rect = canvas.getBoundingClientRect();
-        x = Math.floor((e.clientX - rect.left)/squareSide);
-        y = Math.floor((e.clientY - rect.top)/squareSide); 
 
-    }, false);
+    canvas.addEventListener("mousedown", handle_bomb_placing, false);
+
+
+}
+
+function handle_bomb_placing(e){
+    let rect = canvas.getBoundingClientRect();
+    let x = Math.floor((e.clientX - rect.left)/squareSide);
+    let y = Math.floor((e.clientY - rect.top)/squareSide); 
+    console.log(x, y)
+
+    clear_3x3(x, y);
+    canvas.removeEventListener("mousedown", handle_bomb_placing, false);
     unpause();
+    // canvas.addEventListener("mousedown", handle_mouse_click, false);
+
+    bomb_mode = false;
+}
+
+function is_valid_x_y(x, y){
+    return (x< gridWidth && x>=0 && y< gridHeight && y>= 0)
+}
+
+function clear_3x3(x, y){
+    
+    ctx.beginPath();
+    for (let i = x-1; i <= x+1; i++) {
+        for (let j = y-1; j <= y+1; j++) {
+            if(is_valid_x_y(i, j)){
+                squares[i][j].movementStatus = 0;
+                squares[i][j].colorStatus = 0;
+                ctx.clearRect(i*squareSide, j*squareSide, squareSide, squareSide);
+
+                ctx.rect(i*squareSide, j*squareSide, squareSide, squareSide);
+            }
+            
+        }
+        
+    }
+    ctx.fillStyle = " rgba(0,0,0,0.1)"
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath();
+
+    
 }
