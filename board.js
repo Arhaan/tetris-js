@@ -1,13 +1,11 @@
-// Motion should be more frequent - Prerak => Done
 // Animate motion - optional
-// Down key - Prerak => Done
-// Impression at the bottom - Prerak
 // Bomb - Arhaan
-// Touch Screen Optional - Arhaan
-// Next Block preview - Arhaan
+// Next Block preview - Prerak
 // Handle Game Over - Arhaan
-// More Game shapes - Arhaan
+// More Game shapes - Prerak
 // Help - Arhaan
+// Pause - play - Arhaan
+// Level Display - Arhaan
 
 
 var canvas = document.getElementById("myCanvas");
