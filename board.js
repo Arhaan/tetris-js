@@ -7,7 +7,6 @@
 // Next Block preview - Arhaan
 // Handle Game Over - Arhaan
 // More Game shapes - Arhaan
-// UI of Score display - Arhaan
 // Help - Arhaan
 
 
@@ -17,7 +16,7 @@ var score_box = document.getElementById("score")
 var points = 0;
 var level = 0;
 
-var squareSide = 40;
+var squareSide = 35;
 var filledSquarePadding = 5; // The amount of padding in the unfilled squares
 var gridHeight = 20;
 var gridWidth = 10;

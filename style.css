@@ -1,0 +1,25 @@
+body{
+    min-height:95vh; display:flex;
+	justify-content:space-evenly; 
+	align-items: center; 
+	flex-direction: row;
+    font-family: 'Bebas Neue', cursive;
+    background: url(bg.png) repeat 0 0;
+}
+
+
+.score-board{
+    padding: 10px;
+    display:flex;
+	justify-content: center; 
+	align-items: center; 
+	flex-direction: column;;
+}
+
+canvas{
+    background: #eee; display: block;
+    box-shadow: 0px 3px 12px 8px rgba(0,0,0,0.75);
+-webkit-box-shadow: 0px 3px 12px 8px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 3px 12px 8px rgba(0,0,0,0.75);
+
+}

@@ -2,20 +2,18 @@
 <head>
     <meta charset="utf-8" />
     <title>Tetris</title>
-    <style>
-    	* { padding: 0; margin: 0; }
-    	canvas { background: #eee; display: block;}
-        /* Can change these styles later */
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+                    
+    <link rel="stylesheet" href="style.css">
     
 </head>
 <body>
-<div style="display: flex; justify-content: center; min-width: 100vh;">
-    <canvas id="myCanvas" width="400" height="800"></canvas>
-    <div>
-        <p> Score </p> <p id="score"> 0 </p>
+    <canvas id="myCanvas" width="350" height="700"></canvas>
+    <div class="score-board">
+        <h1> Score: </h1> <h1 id="score">0</h1>
     </div>
-</div>
 
 </body>
 <script src="board.js"></script>
