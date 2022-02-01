@@ -520,7 +520,7 @@ ctx.fillText("Next Block", 1200, 75);
 ctx.closePath();
 
 
-function play_game(){
+function handle_collision(){
     var collided = check_collision();
     if (collided){  
         set_moving_group_to_stationary_after_collision();
@@ -532,9 +532,17 @@ function play_game(){
         create_new_moving_group(new_shape); // Generates a number between 1 and 4 and creates group with that
         prev_shape = new_shape;
     }
-    else{
+    return collided 
+}
+
+function play_game(){
+    var collided = handle_collision();
+    
+    if(!collided){
         down_move_moving_squares();
     }
+
+    handle_collision(); // Prevents any motion just after collision happens
     //Updating Level
     if(points >= 700 && level == 0){level = 1};
     if(points >= 2500 && level == 1){level = 2};
@@ -565,6 +573,8 @@ function move_according_to_input(){
 draw_grid()
 var prev_shape = Math.floor(Math.random()*4)+1;
 var prev_color = -1;
+var next_shape = -1;
+var next_color = -1;
 create_new_moving_group(prev_shape);
 var time_interval = 1000;
 var interval = setInterval(play_game, time_interval*level_bonuses[level][1]);
