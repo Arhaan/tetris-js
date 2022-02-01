@@ -716,3 +716,14 @@ playpausebutton.onclick = function(){
 }
 
 
+function bomb(){
+    pause();
+    var x, y;
+    canvas.addEventListener("mousedown", function (e) {
+        let rect = canvas.getBoundingClientRect();
+        x = Math.floor((e.clientX - rect.left)/squareSide);
+        y = Math.floor((e.clientY - rect.top)/squareSide); 
+
+    }, false);
+    unpause();
+}
