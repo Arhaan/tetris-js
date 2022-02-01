@@ -92,6 +92,9 @@ var squares = [];
 
 var movingSquares = [];
 // Stores coordiantes of all the moving squares
+
+var copy_movingSquares = []
+// Copy of movingSquares for using to draw impression at bottom
 //Main Screen of Tetris
 function draw_grid() {
  
@@ -163,6 +166,12 @@ function create_new_moving_group(command) {
     }
 
     prev_color = randomcolor;
+
+    var len = movingSquares.length;
+        for (var i=0; i<len; ++i){
+            copy_movingSquares[i] = movingSquares[i].slice(0);
+        }
+    
     if (check_collision()){
         return;
     }
@@ -196,11 +205,37 @@ function draw_moving_group(){
     }
 }
 
+function draw_impression(){
+    for (let i = 0; i < copy_movingSquares.length; i++){
+        let x_coordinate = copy_movingSquares[i][0]*squareSide;
+        let y_coordinate = copy_movingSquares[i][1]*squareSide;
+        ctx.beginPath();
+        ctx.rect(x_coordinate+filledSquarePadding/2.0, y_coordinate + filledSquarePadding/2.0, squareSide-filledSquarePadding, squareSide-filledSquarePadding);
+        ctx.fillStyle = lighter_colors[copy_movingSquares[i][2]];
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
+    }
+}
+
 function check_collision(){
     var outcome = false;
     for(var i = 0; i < movingSquares.length; i++){
         let x = movingSquares[i][0];
         let y = movingSquares[i][1] + 1;
+        if(y >= gridHeight || (squares[x][y].movementStatus == 2)){
+            outcome = true;
+            break;
+        }
+    }
+    return outcome;
+}
+
+function check_collision_copy_movingSquare(){
+    var outcome = false;
+    for(var i = 0; i < copy_movingSquares.length; i++){
+        let x = copy_movingSquares[i][0];
+        let y = copy_movingSquares[i][1] + 1;
         if(y >= gridHeight || (squares[x][y].movementStatus == 2)){
             outcome = true;
             break;
@@ -245,7 +280,7 @@ function do_rotation(){
         relcoordinates[i] = [movingSquares[i][0] - movingSquares[2][0], movingSquares[i][1] - movingSquares[2][1]];
     }
 
-    console.log(relcoordinates)
+    //console.log(relcoordinates)
     var present_oreo = prev_shape;
     if (present_oreo === 4){
         return; // Square
@@ -265,7 +300,7 @@ function do_rotation(){
             }
         }
         if (final_positions_free){
-            console.log("Rotating")
+            //console.log("Rotating")
             disappear_moving_group_from_prev_position();
             for (let i = 0; i < movingSquares.length; i++) {
                 movingSquares[i][0] = - relcoordinates[i][1] + movingSquares[2][0];
@@ -325,6 +360,22 @@ function disappear_moving_group_from_prev_position(){
 
 }
 
+function disappear_impression(){
+    ctx.beginPath();
+    for (let i = 0; i < copy_movingSquares.length; i++) {
+        const coordinates = copy_movingSquares[i];
+        var x_coordinate = coordinates[0] * squareSide;
+        var y_coordinate = coordinates[1] * squareSide;
+        
+        ctx.clearRect(x_coordinate, y_coordinate , squareSide, squareSide);
+        ctx.rect(x_coordinate, y_coordinate, squareSide, squareSide);
+    } 
+    ctx.fillStyle = " rgba(0,0,0,0.1)"
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath();
+}
+
 
 function down_move_moving_squares(){
     // Check_collision will ensure that the squares below the moving squares are empty
@@ -337,6 +388,28 @@ function down_move_moving_squares(){
         movingSquares[i][1] += 1; // Increase the y by 1, since canvas behaves like simplecpp
     }
     draw_moving_group();
+}
+
+function bottom_impression(){
+    
+    disappear_impression(); //Clears previous impression
+    disappear_moving_group_from_prev_position();
+    draw_moving_group();
+    var len = movingSquares.length;
+    for (var i=0; i<len; ++i){
+        copy_movingSquares[i] = movingSquares[i].slice(0);
+    }
+
+    //Moves the impression downwards
+    while(!check_collision_copy_movingSquare()){ 
+        for (let i = 0; i < copy_movingSquares.length; i++){
+            copy_movingSquares[i][1] += 1; 
+        }
+    }
+    draw_impression();
+    disappear_moving_group_from_prev_position();
+    draw_moving_group();
+    
 }
 
 
@@ -454,9 +527,9 @@ function play_game(){
     }
     //Updating Level
     if(points >= 700 && level == 0){level = 1};
-    if(points >= 2500 && level == 0){level = 2};
-    if(points >= 8000 && level == 0){level = 3};
-    if(points >= 15000 && level == 0){level = 4};
+    if(points >= 2500 && level == 1){level = 2};
+    if(points >= 6000 && level == 2){level = 3};
+    if(points >= 12000 && level == 3){level = 4};
     inputCommand = "";
 
 
@@ -467,11 +540,13 @@ function move_according_to_input(){
     if(inputCommand == "l" || inputCommand == "r") {side_move_moving_square(inputCommand);}
     if(inputCommand == "d" && !(check_collision())){down_move_moving_squares(); points += 1;} 
 
+    bottom_impression();
+
     //Updating Level
-    if(points >= 1000 && level == 0){level = 1};
-    if(points >= 5000 && level == 0){level = 2};
-    if(points >= 10000 && level == 0){level = 3};
-    if(points >= 50000 && level == 0){level = 4};
+    if(points >= 700 && level == 0){level = 1};
+    if(points >= 2500 && level == 1){level = 2};
+    if(points >= 6000 && level == 2){level = 3};
+    if(points >= 12000 && level == 3){level = 4};
 
     score_box.textContent = points;
     inputCommand = "";
