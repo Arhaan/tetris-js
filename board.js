@@ -2,7 +2,7 @@
 // Bomb - Arhaan
 // Next Block preview - Prerak
 // Handle Game Over - Arhaan
-// More Game shapes - Prerak
+// More Game shapes - Prerak => Done
 // Help - Arhaan
 // Pause - play - Arhaan
 // Level Display - Arhaan
@@ -11,6 +11,7 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var score_box = document.getElementById("score")
+var total_shapes = 7;
 var points = 0;
 var level = 0;
 
@@ -160,6 +161,30 @@ function create_new_moving_group(command) {
         movingSquares[1] = [centrex - 1, 1, randomcolor], 
         movingSquares[2] = [centrex - 0, 0, randomcolor], 
         movingSquares[3] = [centrex + 0, 1, randomcolor] 
+    }
+
+    if (command == 5){
+        // L mirror image shape
+        movingSquares[0] = [centrex + 1, 0, randomcolor],
+        movingSquares[1] = [centrex + 2, 0, randomcolor], 
+        movingSquares[2] = [centrex - 0, 0, randomcolor], 
+        movingSquares[3] = [centrex + 0, 1, randomcolor] 
+    }
+
+    if (command == 6){
+        // Z shape
+        movingSquares[0] = [centrex - 1, 0, randomcolor],
+        movingSquares[1] = [centrex + 1, 1, randomcolor], 
+        movingSquares[2] = [centrex - 0, 0, randomcolor], 
+        movingSquares[3] = [centrex + 0, 1, randomcolor] 
+    }
+
+    if (command == 7){
+        // Z mirrir image shape
+        movingSquares[0] = [centrex + 1, 0, randomcolor],
+        movingSquares[1] = [centrex + 0, 1, randomcolor], 
+        movingSquares[2] = [centrex - 0, 0, randomcolor], 
+        movingSquares[3] = [centrex - 1, 1, randomcolor] 
     }
 
     prev_color = randomcolor;
@@ -503,7 +528,7 @@ function move_row_downwards(row){
     clear_row(row);  //Clears the row after moving it downwards
 }
 
-ctx.beginPath();
+/*ctx.beginPath();
 ctx.rect(1000, 40, 400, 55);
 ctx.rect(1000, 95, 400, 400);
 ctx.stroke();
@@ -515,16 +540,16 @@ ctx.fillStyle = "red";
 ctx.textAlign = "center";
 ctx.fillText("Next Block", 1200, 75);
 ctx.closePath();
-
+*/
 
 function handle_collision(){
     var collided = check_collision();
     if (collided){  
         set_moving_group_to_stationary_after_collision();
         handle_filled_row();
-        var new_shape = Math.floor(Math.random()*4)+1;
+        var new_shape = Math.floor(Math.random()*total_shapes)+1;
         while (new_shape === prev_shape){
-            new_shape = Math.floor(Math.random()*4)+1;
+            new_shape = Math.floor(Math.random()*total_shapes)+1;
         }
         create_new_moving_group(new_shape); // Generates a number between 1 and 4 and creates group with that
         prev_shape = new_shape;
@@ -567,7 +592,7 @@ function move_according_to_input(){
 }
 
 draw_grid()
-var prev_shape = Math.floor(Math.random()*4)+1;
+var prev_shape = Math.floor(Math.random()*total_shapes)+1;
 var prev_color = -1;
 var next_shape = -1;
 var next_color = -1;
