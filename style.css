@@ -22,7 +22,6 @@ canvas{
     box-shadow: 0px 3px 12px 8px rgba(0,0,0,0.75);
 -webkit-box-shadow: 0px 3px 12px 8px rgba(0,0,0,0.75);
 -moz-box-shadow: 0px 3px 12px 8px rgba(0,0,0,0.75);
-
 }
 
 
@@ -38,34 +37,43 @@ canvas{
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
+}
   
-  /* Modal Content/Box */
-  .modal-content {
+/* Modal Content/Box */
+.modal-content {
+    position: relative;
+
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
     text-align: center;
-  }
-  
-  /* The Close Button */
-  .modal-close{
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+/* The Close Button */
+.modal-close{
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-  }
-  .modal-close:hover,
-  .modal-close:focus {
+}
+.modal-close:hover,
+.modal-close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
-  }
-  
+}
 
-  .button{
+
+.button{
     font-size: 17px;
     border:none;
     border-radius:10px;
@@ -85,5 +93,4 @@ canvas{
     user-select:none;
     background-color:#616161;
     color:#ffffff
-
-  }
+}
