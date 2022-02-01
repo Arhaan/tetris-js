@@ -437,7 +437,7 @@ function do_rotation(){
         relcoordinates[i] = [movingSquares[i][0] - movingSquares[2][0], movingSquares[i][1] - movingSquares[2][1]];
     }
 
-    //console.log(relcoordinates)
+    console.log(relcoordinates)
     var present_oreo = prev_shape;
     if (present_oreo === 4){
         return; // Square
@@ -701,7 +701,7 @@ function handle_collision(){
         create_new_moving_group(next_shape); // Generates a number between 1 and 4 and creates group with that
         prev_shape = next_shape;
         next_shape = new_shape;
-        prev_shape = new_shape;
+
         create_next_moving_group_array(next_shape)
     }
     return collided 
