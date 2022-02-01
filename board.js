@@ -172,7 +172,10 @@ function create_new_moving_group(command) {
             copy_movingSquares[i] = movingSquares[i].slice(0);
         }
     
-    if (check_collision()){
+    if (overlap()){
+        console.log("Game Over")
+        clearInterval(interval);
+        clearInterval(interval_input);
         return;
     }
     
@@ -223,6 +226,19 @@ function check_collision(){
     for(var i = 0; i < movingSquares.length; i++){
         let x = movingSquares[i][0];
         let y = movingSquares[i][1] + 1;
+        if(y >= gridHeight || (squares[x][y].movementStatus == 2)){
+            outcome = true;
+            break;
+        }
+    }
+    return outcome;
+}
+
+function overlap(){
+    var outcome = false;
+    for(var i = 0; i < movingSquares.length; i++){
+        let x = movingSquares[i][0];
+        let y = movingSquares[i][1];
         if(y >= gridHeight || (squares[x][y].movementStatus == 2)){
             outcome = true;
             break;
@@ -515,12 +531,6 @@ function play_game(){
         }
         create_new_moving_group(new_shape); // Generates a number between 1 and 4 and creates group with that
         prev_shape = new_shape;
-        if (check_collision()){
-            // Game Over
-            console.log("Game Over")
-            clearInterval(interval);
-            clearInterval(interval_input);
-        }
     }
     else{
         down_move_moving_squares();
