@@ -1,7 +1,5 @@
 // Animate motion - optional
 // Bomb - Arhaan
-// Next Block preview - Prerak
-// More Game shapes - Prerak => Done
 // Pause - play - Arhaan
 
 
@@ -496,10 +494,13 @@ function handle_filled_row(){
             }    
         }
         if(complete_row_filled){
+            pause();
             clear_row(j);
+            console.log("stopping")
             for(let k = j - 1; k >= 0; k--){
                 move_row_downwards(k);
             }
+            unpause()
             filled_rows += 1;
         }
     }
@@ -695,3 +696,23 @@ window.onclick = function(event) {
     unpause();
   }
 }
+
+
+// Pause and Play
+var playpausebutton = document.getElementById("pause-play")
+var paused = false;
+playpausebutton.onclick = function(){
+    if (paused){
+        unpause();
+        paused = false;
+        playpausebutton.innerHTML = "<i class=\"fas fa-pause\"></i>";
+    }
+    else{
+        pause();
+        paused = true;
+        playpausebutton.innerHTML = "<i class=\"fas fa-play\"></i>";
+    }
+
+}
+
+
