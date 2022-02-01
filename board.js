@@ -351,6 +351,31 @@ function do_rotation(){
             }
             draw_moving_group();
         }
+        else{
+            // Rotate in opposite direction
+            final_positions_free = true;
+            for (let i = 0; i < movingSquares.length; i++) {
+                var newx = movingSquares[2][0] + relcoordinates[i][1];
+                var newy = movingSquares[2][1] - relcoordinates[i][0];
+    
+                if (newx < 0 || newx >= gridWidth || newy < 0 || newy >= gridHeight || squares[newx][newy].movementStatus == 2){
+                    final_positions_free = false;
+    
+                    
+                    break;
+                }
+                if (final_positions_free){
+                    //console.log("Rotating")
+                    disappear_moving_group_from_prev_position();
+                    for (let i = 0; i < movingSquares.length; i++) {
+                        movingSquares[i][0] = + relcoordinates[i][1] + movingSquares[2][0];
+                        movingSquares[i][1] = - relcoordinates[i][0] + movingSquares[2][1]; 
+                        
+                    }
+                    draw_moving_group();
+                }
+            } 
+        }
     }
 
 }
