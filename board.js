@@ -854,8 +854,18 @@ var bombbtn = document.getElementById("bomb-button")
 bombbtn.onclick = bomb;
 var bomb_mode = false;
 function bomb(){
+    pause();
     if (points < bomb_cutoff_score){
-        return;
+        var modal = document.getElementById("BombScoreModal");
+        modal.style.display = "block";
+    var close = document.getElementById("bomb-modal-close");
+    modal.style.display = "block";
+    close.onclick = function() {
+        modal.style.display = "none";
+        unpause();
+      }
+      return;
+        
     }
     bomb_mode = true;
     // canvas.removeEventListener("mousedown", handle_mouse_click, false);
