@@ -10,9 +10,43 @@
     
 </head>
 <body>
+
+
+    <!-- The Game Over Modal -->
+<div id="GameOverModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        
+        <span class="modal-close" id="game-over-modal-close">&times;</span>
+      <h1>Game Over</h1>
+      <h2 id="modal-score"></h2>
+
+      <h2 id="modal-level"></h2>
+    </div>
+  
+</div>
+
+   <!-- The Help Modal -->
+   <div id="HelpModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        
+        <span class="modal-close" id="help-modal-close">&times;</span>
+      <h1>Help</h1>
+      <p></p>
+    </div>
+  
+</div>
+  
     <canvas id="myCanvas" width="350" height="700"></canvas>
     <div class="score-board">
         <h1> Score: </h1> <h1 id="score">0</h1>
+
+        <h1> Level: </h1> <h1 id="level">0</h1> 
+
+        <button class="button" id="help-button">Help</a>
     </div>
 
 </body>

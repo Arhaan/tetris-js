@@ -12,6 +12,7 @@ var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var score_box = document.getElementById("score")
 var total_shapes = 7;
+var level_box = document.getElementById("level")
 var points = 0;
 var level = 0;
 
@@ -20,6 +21,8 @@ var filledSquarePadding = 5; // The amount of padding in the unfilled squares
 var gridHeight = 20;
 var gridWidth = 10;
 var inputCommand = "";
+
+
 
 
 document.addEventListener("keydown", keyDownHandler, false);
@@ -195,6 +198,7 @@ function create_new_moving_group(command) {
         }
     
     if (overlap()){
+        handle_game_over()
         console.log("Game Over")
         clearInterval(interval);
         clearInterval(interval_input);
@@ -569,6 +573,8 @@ function play_game(){
     if(points >= 2500 && level == 1){level = 2};
     if(points >= 6000 && level == 2){level = 3};
     if(points >= 12000 && level == 3){level = 4};
+
+    level_box.textContent = level;
     inputCommand = "";
 
 
@@ -597,7 +603,7 @@ var prev_color = -1;
 var next_shape = -1;
 var next_color = -1;
 create_new_moving_group(prev_shape);
-var time_interval = 1000;
+var time_interval = 100;
 var interval = setInterval(play_game, time_interval*level_bonuses[level][1]);
 var interval_input = setInterval(move_according_to_input,time_interval/20*level_bonuses[level][1]);
 
@@ -613,3 +619,39 @@ var interval_input = setInterval(move_according_to_input,time_interval/20*level_
 // }
 
 // var interval = setInterval(test_rotation, 100);
+
+
+function handle_game_over(){
+    var modal = document.getElementById("GameOverModal");
+    modal.style.display = "block";
+    var close = document.getElementById("game-over-modal-close");
+    var score_display = document.getElementById("modal-score");
+    var  level_display = document.getElementById("modal-level");
+    score_display.textContent = "Your Score: " + points; 
+
+    level_display.textContent = "Level Reached: " + level;
+    modal.style.display = "block";
+    close.onclick = function() {
+        modal.style.display = "none";
+      }
+}
+
+
+
+// Handle Clicking on Help
+var helpModal = document.getElementById("HelpModal");
+var helpModalOpen = document.getElementById("help-button");
+var helpModalClose = document.getElementById("help-modal-close");
+helpModalOpen.onclick = function() {
+  helpModal.style.display = "block";
+}
+helpModalClose.onclick = function() {
+  helpModal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == helpModal) {
+    helpModal.style.display = "none";
+  }
+}
