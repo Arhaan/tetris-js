@@ -716,11 +716,14 @@ playpausebutton.onclick = function(){
 
 }
 
-
+var bomb_cutoff_score = 50;
 var bombbtn = document.getElementById("bomb-button")
 bombbtn.onclick = bomb;
 var bomb_mode = false;
 function bomb(){
+    if (score < bomb_cutoff_score){
+        return;
+    }
     bomb_mode = true;
     // canvas.removeEventListener("mousedown", handle_mouse_click, false);
     pause();
@@ -740,6 +743,7 @@ function handle_bomb_placing(e){
     canvas.removeEventListener("mousedown", handle_bomb_placing, false);
     unpause();
     // canvas.addEventListener("mousedown", handle_mouse_click, false);
+    score -= bomb_cutoff_score;
 
     bomb_mode = false;
 }
