@@ -5,6 +5,7 @@
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
+var ctx2 = document.getElementById("Display_NextBlock").getContext("2d");
 var score_box = document.getElementById("score")
 var total_shapes = 7;
 var level_box = document.getElementById("level")
@@ -92,6 +93,9 @@ var movingSquares = [];
 
 var copy_movingSquares = []
 // Copy of movingSquares for using to draw impression at bottom
+
+var next_squares_array = []
+
 //Main Screen of Tetris
 function draw_grid() {
  
@@ -115,17 +119,44 @@ function draw_grid() {
 
 }
 
+//Main Screen of Tetris
+function draw_grid_next() {
+
+    ctx2.beginPath();
+    
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j <  2; j++) {
+            var square = new Square();
+            var x_coordinate = i * squareSide;
+            var y_coordinate = j * squareSide;
+            square.coordinateX = x_coordinate;
+            square.coordinateY = y_coordinate;
+            ctx2.rect(x_coordinate, y_coordinate, squareSide, squareSide);
+        }
+    }
+    ctx2.fillStyle = " rgba(0,0,0,0.1)"
+    ctx2.fill();
+    ctx2.stroke();
+    ctx2.closePath();
+
+}
+
 
 // Creates new moving group
 function create_new_moving_group(command) {
     // Arhaan
     centrex = gridWidth/2;
     
-    var randomcolor = Math.floor(Math.random()*(colors.length-1)) + 1;
+    var randomcolor = next_color;
     
-    while (randomcolor === prev_color){
-        randomcolor = Math.floor(Math.random()*(colors.length-1)) + 1;
+    var new_random = Math.floor(Math.random()*(colors.length-1)) + 1;
+    
+    while (new_random === next_color){
+        new_random = Math.floor(Math.random()*(colors.length-1)) + 1;
     }
+    prev_color = next_color;
+    next_color = new_random;
+
 
         
     if (command == 1){
@@ -186,7 +217,6 @@ function create_new_moving_group(command) {
         movingSquares[3] = [centrex - 1, 1, randomcolor] 
     }
 
-    prev_color = randomcolor;
 
     var len = movingSquares.length;
         for (var i=0; i<len; ++i){
@@ -203,6 +233,78 @@ function create_new_moving_group(command) {
     draw_moving_group();
 
 }
+
+
+function create_next_moving_group_array(command) {
+    // Arhaan
+    centrex = 2;
+    var randomcolor = next_color;
+        
+    if (command == 1){
+        // Straight Line
+        next_squares_array[0] = [centrex - 2, 0, randomcolor],
+        next_squares_array[1] = [centrex - 1, 0, randomcolor], 
+        next_squares_array[2] = [centrex - 0, 0, randomcolor], 
+        next_squares_array[3] = [centrex + 1, 0, randomcolor] 
+    }
+
+    if (command == 2){
+        // T shape
+        next_squares_array[0] = [centrex - 1, 0, randomcolor],
+        next_squares_array[1] = [centrex - 0, 1, randomcolor], 
+        next_squares_array[2] = [centrex - 0, 0, randomcolor], 
+        next_squares_array[3] = [centrex + 1, 0, randomcolor] 
+    }
+
+
+    if (command == 3){
+        // L shape
+        next_squares_array[0] = [centrex - 2, 0, randomcolor],
+        next_squares_array[1] = [centrex - 1, 0, randomcolor], 
+        next_squares_array[2] = [centrex - 0, 0, randomcolor], 
+        next_squares_array[3] = [centrex + 0, 1, randomcolor] 
+    }
+
+
+    if (command == 4){
+        // Square shape
+        next_squares_array[0] = [centrex - 1, 0, randomcolor],
+        next_squares_array[1] = [centrex - 1, 1, randomcolor], 
+        next_squares_array[2] = [centrex - 0, 0, randomcolor], 
+        next_squares_array[3] = [centrex + 0, 1, randomcolor] 
+    }
+
+    if (command == 5){
+        // L mirror image shape
+        centrex = 1
+        next_squares_array[0] = [centrex + 1, 0, randomcolor],
+        next_squares_array[1] = [centrex + 2, 0, randomcolor], 
+        next_squares_array[2] = [centrex - 0, 0, randomcolor], 
+        next_squares_array[3] = [centrex + 0, 1, randomcolor] 
+    }
+
+    if (command == 6){
+        // Z shape
+        next_squares_array[0] = [centrex - 1, 0, randomcolor],
+        next_squares_array[1] = [centrex + 1, 1, randomcolor], 
+        next_squares_array[2] = [centrex - 0, 0, randomcolor], 
+        next_squares_array[3] = [centrex + 0, 1, randomcolor] 
+    }
+
+    if (command == 7){
+        // Z mirrir image shape
+        next_squares_array[0] = [centrex + 1, 0, randomcolor],
+        next_squares_array[1] = [centrex + 0, 1, randomcolor], 
+        next_squares_array[2] = [centrex - 0, 0, randomcolor], 
+        next_squares_array[3] = [centrex - 1, 1, randomcolor] 
+    }
+
+    draw_next_squares()
+    
+    
+
+}
+
 
 
 function draw_moving_group(){
@@ -226,6 +328,24 @@ function draw_moving_group(){
         ctx.fill();
         ctx.stroke();
         ctx.closePath();
+    }
+}
+
+function draw_next_squares(){
+    ctx2.clearRect(0, 0, 144, 70)
+    draw_grid_next();
+    for (let i = 0; i < next_squares_array.length; i++) {
+        const coordinates = next_squares_array[i];
+        var x_coordinate = coordinates[0] * squareSide;
+        var y_coordinate = coordinates[1] * squareSide;
+        
+    
+        ctx2.beginPath();
+        ctx2.rect(x_coordinate+filledSquarePadding/2.0, y_coordinate + filledSquarePadding/2.0, squareSide-filledSquarePadding, squareSide-filledSquarePadding);
+        ctx2.fillStyle = colors[next_squares_array[i][2]];
+        ctx2.fill();
+        ctx2.stroke();
+        ctx2.closePath();
     }
 }
 
@@ -575,11 +695,14 @@ function handle_collision(){
         set_moving_group_to_stationary_after_collision();
         handle_filled_row();
         var new_shape = Math.floor(Math.random()*total_shapes)+1;
-        while (new_shape === prev_shape){
+        while (new_shape === next_shape){
             new_shape = Math.floor(Math.random()*total_shapes)+1;
         }
-        create_new_moving_group(new_shape); // Generates a number between 1 and 4 and creates group with that
+        create_new_moving_group(next_shape); // Generates a number between 1 and 4 and creates group with that
+        prev_shape = next_shape;
+        next_shape = new_shape;
         prev_shape = new_shape;
+        create_next_moving_group_array(next_shape)
     }
     return collided 
 }
@@ -621,11 +744,21 @@ function move_according_to_input(){
 }
 
 draw_grid()
+draw_grid_next();
 var prev_shape = Math.floor(Math.random()*total_shapes)+1;
-var prev_color = -1;
-var next_shape = -1;
-var next_color = -1;
+var prev_color = Math.floor(Math.random()*(colors.length-1)) + 1;
+var next_shape = Math.floor(Math.random()*total_shapes)+1;
+while(next_shape === prev_shape){
+    next_shape = Math.floor(Math.random()*total_shapes)+1;
+}
+var next_color = Math.floor(Math.random()*(colors.length-1)) + 1;
+while(next_color === prev_color){
+    next_color = Math.floor(Math.random()*(colors.length-1)) + 1;
+}
+
 create_new_moving_group(prev_shape);
+create_next_moving_group_array(next_shape);
+
 var time_interval = 1000;
 var interval = setInterval(play_game, time_interval*level_bonuses[level][1]);
 var interval_input = setInterval(move_according_to_input,time_interval/20*level_bonuses[level][1]);
@@ -775,3 +908,6 @@ function clear_3x3(x, y){
 
     
 }
+
+
+
