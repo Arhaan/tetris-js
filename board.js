@@ -1,11 +1,8 @@
 // Animate motion - optional
 // Bomb - Arhaan
 // Next Block preview - Prerak
-// Handle Game Over - Arhaan
 // More Game shapes - Prerak => Done
-// Help - Arhaan
 // Pause - play - Arhaan
-// Level Display - Arhaan
 
 
 var canvas = document.getElementById("myCanvas");
@@ -200,8 +197,7 @@ function create_new_moving_group(command) {
     if (overlap()){
         handle_game_over()
         console.log("Game Over")
-        clearInterval(interval);
-        clearInterval(interval_input);
+        pause()
         return;
     }
     
@@ -633,6 +629,17 @@ var interval = setInterval(play_game, time_interval*level_bonuses[level][1]);
 var interval_input = setInterval(move_according_to_input,time_interval/20*level_bonuses[level][1]);
 
 
+
+function pause(){
+    clearInterval(interval);
+    clearInterval(interval_input);
+}
+
+
+function unpause(){
+    interval = setInterval(play_game, time_interval*level_bonuses[level][1]); 
+    interval_input = setInterval(move_according_to_input,time_interval/20*level_bonuses[level][1]);
+}
 // play_game()
 // play_game()
 // play_game()
@@ -674,14 +681,17 @@ var helpModalOpen = document.getElementById("help-button");
 var helpModalClose = document.getElementById("help-modal-close");
 helpModalOpen.onclick = function() {
   helpModal.style.display = "block";
+  pause();
 }
 helpModalClose.onclick = function() {
   helpModal.style.display = "none";
+  unpause();
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == helpModal) {
     helpModal.style.display = "none";
+    unpause();
   }
 }
