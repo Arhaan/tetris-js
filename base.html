@@ -47,7 +47,7 @@
 
           <p> Bomb: </p>
 
-          <p> Click on Bomb to freeze screen and select a square. All the blocks in the 3x3 grid around the square gets destroyed. USing Bomb Feature costs 50 points </p> 
+          <p> Click on bomb to freeze screen and select a square. All the blocks in the 3x3 grid around the square get destroyed. Using Bomb costs 50 points </p> 
 
           
           
@@ -59,15 +59,19 @@
     
     <div class="score-board">
         <h1> Score: </h1> <h1 id="score">0</h1>
-
+        
         <h1> Level: </h1> <h1 id="level">0</h1> 
+
+        <h1>Next Up</h1>
+        <canvas id = "Display_NextBlock" width = "140" height = "140"> </canvas>
         <button class="button" id="pause-play"><i class="fas fa-pause"></i></button>
+
+        
 
         <button class="button" id="bomb-button">Bomb</button>
         <button class="button" id="help-button">Help</button>
 
-        <h1>Next Square</h1>
-        <canvas id = "Display_NextBlock" width = "140" height = "70"> </canvas>
+        
     </div>
 
 </body>

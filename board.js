@@ -125,7 +125,7 @@ function draw_grid_next() {
     ctx2.beginPath();
     
     for (let i = 0; i < 4; i++) {
-        for (let j = 0; j <  2; j++) {
+        for (let j = 0; j <  4; j++) {
             var square = new Square();
             var x_coordinate = i * squareSide;
             var y_coordinate = j * squareSide;
@@ -332,12 +332,12 @@ function draw_moving_group(){
 }
 
 function draw_next_squares(){
-    ctx2.clearRect(0, 0, 144, 70)
+    ctx2.clearRect(0, 0, 140, 140)
     draw_grid_next();
     for (let i = 0; i < next_squares_array.length; i++) {
         const coordinates = next_squares_array[i];
         var x_coordinate = coordinates[0] * squareSide;
-        var y_coordinate = coordinates[1] * squareSide;
+        var y_coordinate = (coordinates[1] +1)* squareSide;
         
     
         ctx2.beginPath();
