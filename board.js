@@ -479,17 +479,17 @@ function do_rotation(){
                     
                     break;
                 }
-                if (final_positions_free){
-                    //console.log("Rotating")
-                    disappear_moving_group_from_prev_position();
-                    for (let i = 0; i < movingSquares.length; i++) {
-                        movingSquares[i][0] = + relcoordinates[i][1] + movingSquares[2][0];
-                        movingSquares[i][1] = - relcoordinates[i][0] + movingSquares[2][1]; 
-                        
-                    }
-                    draw_moving_group();
-                }
             } 
+            if (final_positions_free){
+                //console.log("Rotating")
+                disappear_moving_group_from_prev_position();
+                for (let i = 0; i < movingSquares.length; i++) {
+                    movingSquares[i][0] = + relcoordinates[i][1] + movingSquares[2][0];
+                    movingSquares[i][1] = - relcoordinates[i][0] + movingSquares[2][1]; 
+                    
+                }
+                draw_moving_group();
+            }
         }
     }
 
@@ -789,6 +789,9 @@ function unpause(){
 
 
 function handle_game_over(){
+    bombbtn.disabled = true;
+    playpausebutton.disabled = true;
+    helpModalOpen.disabled = true;
     var modal = document.getElementById("GameOverModal");
     modal.style.display = "block";
     var close = document.getElementById("game-over-modal-close");
